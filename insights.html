@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Insights</title>
+
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 10px 10px 10px 10px;
+      width: 500px;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+
+  <!--Load the AJAX API-->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', { 'packages': ['corechart'] });
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(weeklyVisitsChart);
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(weeklyVisitsNewVsRepeatChart);
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(spendPerVisitChart);
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(spendPerVisitNewVsRepeatChart);
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(spendDistributionChart);
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(corporateVisitsChart);
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(corporateSpendingChart);
+
+    function weeklyVisitsChart() {
+
+      // Create the data table.
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Week ending');
+      data.addColumn('number', 'Total customers');
+      data.addRows([
+        ['28 Apr', 574],
+        ['21 Apr', 580],
+        ['14 Apr', 633],
+        ['7 Apr', 724],
+        ['31 Mar', 794],
+        ['24 Mar', 756]
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+        {
+          calc: "stringify",
+          sourceColumn: 1,
+          type: "string",
+          role: "annotation"
+        }]);
+
+      // Set chart options
+      var options = {
+        titleTextStyle: { fontSize: 16 },
+        title: 'Number of weekly customer visits',
+        width: 500,
+        height: 350,
+        bar: { groupWidth: "80%" },
+        vAxis: { title: 'Week ending' },
+        hAxis: { title: 'Customer visits per week', minValue: 0 },
+        legend: { position: "top" }
+      };
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.BarChart(document.getElementById('weekly_visits_div'));
+      chart.draw(view, options);
+    }
+
+    function weeklyVisitsNewVsRepeatChart() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Week ending', 'New customers', 'Repeat customers'],
+        ['28 Apr', 343, 231],
+        ['21 Apr', 335, 245],
+        ['14 Apr', 378, 255],
+        ['7 Apr', 465, 259],
+        ['31 Mar', 536, 258],
+        ['24 Mar', 494, 262]
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+        {
+          calc: "stringify",
+          sourceColumn: 1,
+          type: "string",
+          role: "annotation"
+        },
+        2,
+        {
+          calc: "stringify",
+          sourceColumn: 2,
+          type: "string",
+          role: "annotation"
+        }]);
+
+      // Set chart options
+      var options = {
+        titleTextStyle: { fontSize: 16 },
+        title: 'Number of weekly customer visits',
+        width: 500,
+        height: 350,
+        bar: { groupWidth: "80%" },
+        vAxis: { title: 'Week ending' },
+        hAxis: { title: 'Customer visits per week', minValue: 0 },
+        legend: { position: "top" }
+      };
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.BarChart(document.getElementById('weekly_visits_new_vs_repeat_div'));
+      chart.draw(view, options);
+      $("#weekly_visits_new_vs_repeat_div").hide();
+    }
+
+    var weeklyVisitsToggle = false;
+
+    function toggleVisitsChart() {
+      if (weeklyVisitsToggle) {
+        $("#weekly_visits_new_vs_repeat_div").hide();
+        $("#weekly_visits_div").show();
+      } else {
+        $("#weekly_visits_div").hide();
+        $("#weekly_visits_new_vs_repeat_div").show();
+      }
+      weeklyVisitsToggle = !weeklyVisitsToggle;
+    }
+
+    function spendPerVisitChart() {
+
+      // Create the data table.
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Week ending');
+      data.addColumn('number', 'All customers');
+      data.addRows([
+        ['28 Apr', 38],
+        ['21 Apr', 39],
+        ['14 Apr', 28],
+        ['7 Apr', 33],
+        ['31 Mar', 31],
+        ['24 Mar', 27]
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+        {
+          calc: "stringify",
+          sourceColumn: 1,
+          type: "string",
+          role: "annotation"
+        }]);
+
+      // Set chart options
+      var options = {
+        titleTextStyle: { fontSize: 16 },
+        title: 'Median customer spend per visit',
+        width: 500,
+        height: 350,
+        bar: { groupWidth: "80%" },
+        vAxis: { title: 'Week ending' },
+        hAxis: { title: 'Median spend per visit', minValue: 0, format: 'currency' },
+        legend: { position: "top" }
+      };
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.BarChart(document.getElementById('spend_per_visit_div'));
+      chart.draw(view, options);
+    }
+
+    function spendPerVisitNewVsRepeatChart() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Week ending', 'New customers', 'Repeat customers'],
+        ['28 Apr', 36, 40],
+        ['21 Apr', 37, 41],
+        ['14 Apr', 26, 30],
+        ['7 Apr', 31, 35],
+        ['31 Mar', 29, 33],
+        ['24 Mar', 25, 29]
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+        {
+          calc: "stringify",
+          sourceColumn: 1,
+          type: "string",
+          role: "annotation"
+        },
+        2,
+        {
+          calc: "stringify",
+          sourceColumn: 2,
+          type: "string",
+          role: "annotation"
+        }]);
+
+      // Set chart options
+      var options = {
+        titleTextStyle: { fontSize: 16 },
+        title: 'Median customer spend per visit',
+        width: 500,
+        height: 350,
+        bar: { groupWidth: "80%" },
+        vAxis: { title: 'Week ending' },
+        hAxis: { title: 'Median spend per visit', minValue: 0 },
+        legend: { position: "top" }
+      };
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.BarChart(document.getElementById('spend_per_visit_new_vs_repeat_div'));
+      chart.draw(view, options);
+      $("#spend_per_visit_new_vs_repeat_div").hide();
+    }
+
+    var medianSpendToggle = false;
+
+    function toggleMedianSpendChart() {
+      if (medianSpendToggle) {
+        $("#spend_per_visit_new_vs_repeat_div").hide();
+        $("#spend_per_visit_div").show();
+      } else {
+        $("#spend_per_visit_div").hide();
+        $("#spend_per_visit_new_vs_repeat_div").show();
+      }
+      medianSpendToggle = !medianSpendToggle;
+    }
+
+    function spendDistributionChart() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Week ending', 'Number of sales', { role: 'style' }],
+        ['$0 - $20', 1052, '#104E8B'],
+        ['$21 - $40', 1272, '#1874CD'],
+        ['$41 - $60', 671, '#1C86EE'],
+        ['$61 - $80', 420, '#5CACEE'],
+        ['$81 - $100', 188, '#87CEFF'],
+        ['$101+', 459, '#B0E2FF']
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+        {
+          calc: "stringify",
+          sourceColumn: 1,
+          type: "string",
+          role: "annotation"
+        }
+        , 2]);
+
+      // Set chart options
+      var options = {
+        titleTextStyle: { fontSize: 16 },
+        title: 'Customer spend amount distribution',
+        width: 500,
+        height: 300,
+        bar: { groupWidth: "80%" },
+        vAxis: { title: 'Number of sales' },
+        hAxis: { title: 'Band', minValue: 0, format: 'currency' },
+        legend: { position: "none" }
+      };
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.ColumnChart(document.getElementById('spend_distribution_div'));
+      chart.draw(view, options);
+    }
+
+    function corporateVisitsChart() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Week ending', 'Personal cards', 'Corporate cards'],
+        ['28 Apr', 470, 104],
+        ['21 Apr', 464, 116],
+        ['14 Apr', 525, 109],
+        ['7 Apr', 585, 142],
+        ['31 Mar', 633, 155],
+        ['24 Mar', 602, 158]
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+        {
+          calc: "stringify",
+          sourceColumn: 1,
+          type: "string",
+          role: "annotation"
+        },
+        2,
+        {
+          calc: "stringify",
+          sourceColumn: 2,
+          type: "string",
+          role: "annotation"
+        }]);
+
+      // Set chart options
+      var options = {
+        titleTextStyle: { fontSize: 16 },
+        title: 'Personal and corporate customer visits',
+        width: 500,
+        height: 350,
+        bar: { groupWidth: "80%" },
+        vAxis: { title: 'Week ending' },
+        hAxis: { title: 'Customer visits per week', minValue: 0 },
+        legend: { position: "top" }
+      };
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.BarChart(document.getElementById('corporate_visits_div'));
+      chart.draw(view, options);
+    }
+
+    function corporateSpendingChart() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Week ending', 'Personal customers', 'Corporate customers'],
+        ['28 Apr', 33, 43],
+        ['21 Apr', 34, 44],
+        ['14 Apr', 23, 33],
+        ['7 Apr', 28, 38],
+        ['31 Mar', 26, 36],
+        ['24 Mar', 22, 32]
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+        {
+          calc: "stringify",
+          sourceColumn: 1,
+          type: "string",
+          role: "annotation"
+        },
+        2,
+        {
+          calc: "stringify",
+          sourceColumn: 2,
+          type: "string",
+          role: "annotation"
+        }]);
+
+      // Set chart options
+      var options = {
+        titleTextStyle: { fontSize: 16 },
+        title: 'Personal and corporate customer spend',
+        width: 500,
+        height: 350,
+        bar: { groupWidth: "80%" },
+        vAxis: { title: 'Week ending' },
+        hAxis: { title: 'Median spend per visit', minValue: 0 },
+        legend: { position: "top" }
+      };
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.BarChart(document.getElementById('corporate_spending_div'));
+      chart.draw(view, options);
+    }
+
+  </script>
+</head>
+
+<body>
+  <!--Div that will hold the pie chart-->
+  <div class="bold" style="width: 500px; height: 315px; background: url('header_500-315.jpg')">
+    <div style="padding: 120px 0px 0px 30px;">
+      <div style="font-size: 20px;">
+        <div>Merchant Name</div>
+        <div>Customer Insights</div>
+      </div>
+      <div style="margin-top: 20px;">Location</div>
+    </div>
+  </div>
+  <div id="weekly_visits_div"></div>
+  <div id="weekly_visits_new_vs_repeat_div"></div>
+  <div style="text-align: center;">
+    <a class="waves-effect waves-light blue btn-small" href="javascript:toggleVisitsChart()">Toggle New vs Repeat
+      Customers</a>
+  </div>
+  <hr style="width: 500px; text-align:left; margin-left:0; height:1px; border:none; color:#ccc; background-color:#ccc;">
+  <div id="spend_per_visit_div"></div>
+  <div id="spend_per_visit_new_vs_repeat_div"></div>
+  <div style="text-align: center;">
+    <a class="waves-effect waves-light blue btn-small" href="javascript:toggleMedianSpendChart()">Toggle New vs Repeat
+      Customers</a>
+  </div>
+  <hr style="width: 500px; text-align:left; margin-left:0; height:1px; border:none; color:#ccc; background-color:#ccc;">
+  <div id="spend_distribution_div"></div>
+  <hr style="width: 500px; text-align:left; margin-left:0; height:1px; border:none; color:#ccc; background-color:#ccc;">
+  <div id="corporate_visits_div"></div>
+  <hr style="width: 500px; text-align:left; margin-left:0; height:1px; border:none; color:#ccc; background-color:#ccc;">
+  <div id="corporate_spending_div"></div>
+  <hr style="width: 500px; text-align:left; margin-left:0; height:1px; border:none; color:#ccc; background-color:#ccc;">
+  <div>
+    Please note that the insights presented here are estimates only. Customer visits are based on the regularity of the
+    same ETFPOS card presented for payment.
+  </div>
+</body>
+
+</html>
