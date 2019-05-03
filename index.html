@@ -25,6 +25,21 @@
       width: 400px;
     }
 
+    table {
+      border-spacing: 10px;
+      border-collapse: separate;
+    }
+
+    tr {
+      border: none;
+    }
+
+    td,
+    th {
+      padding: 0px 0px;
+      border-radius: 5px;
+    }
+
     .bold {
       font-weight: bold;
     }
@@ -405,6 +420,102 @@
       <div style="font-size: 14px; margin-top: 15px;">Location</div>
     </div>
   </div>
+  <div style="font-size: 14px; margin-top: 15px; margin-left: 10px;" class="bold">
+    Number of weekly customer visits
+  </div>
+  <div style="font-size: 12px; margin: 0px;">
+      <table class="responsive-table">
+          <tr>
+            <td style="background-color: #bbdefb;" width="50%">
+              <table>
+                <tr>
+                  <td class="bold" style="color: #2979ff ;">
+                    15 Apr to 21 Apr
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="bold">335</span> new customers
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="bold">245</span> repeat customers
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style="background-color: #bbdefb;" width="50%">
+              <table>
+                <tr>
+                  <td class="bold" style="color: #2979ff ;">
+                    22 Apr to 28 Apr
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="bold">343</span> new customers (-5%)
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="bold">231</span> repeat customers (-2%)
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+  <div style="font-size: 14px; margin-top: 15px; margin-left: 10px;" class="bold">
+    Median customer spend per visit
+  </div>
+  <div style="font-size: 12px; margin: 0px;">
+    <table class="responsive-table">
+      <tr>
+        <td style="background-color: #bbdefb;" width="50%">
+          <table>
+            <tr>
+              <td class="bold" style="color: #2979ff ;">
+                15 Apr to 21 Apr
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="bold">$38</span> new customers
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="bold">$36</span> repeat customers
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td style="background-color: #bbdefb;" width="50%">
+          <table>
+            <tr>
+              <td class="bold" style="color: #2979ff ;">
+                22 Apr to 28 Apr
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="bold">$38</span> new customers (-5%)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="bold">$37</span> repeat customers (-2%)
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <hr
+    style="width: 100%; text-align:left; margin: 20px 0px 10px 0px; height:1px; border:none; color:#ccc; background-color:#ccc;">
   <div id="weekly_visits_div"></div>
   <div id="weekly_visits_new_vs_repeat_div"></div>
   <div style="text-align: center;">
